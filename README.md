@@ -1,2 +1,3 @@
-# matrix-analyzer
-find matrix's determinant, minors, addons and opposite matrix
+# Matrix Analyzer
+
+With this tool you can find matrix's determinant, minors, addons and opposite matrix
