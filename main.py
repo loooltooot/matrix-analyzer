@@ -80,7 +80,7 @@ def get_opposite_matrix(matrix, size):
     opposite_matrix = copy.deepcopy(trans_matrix)
     for i in range(size):
         for j in range(size):
-            nums_after_dot = len(str(opposite_matrix[i][j] / determinant))
+            nums_after_dot = len(str(opposite_matrix[i][j] / determinant)) - 2
             if nums_after_dot < 5:
                 opposite_matrix[i][j] = trans_matrix[i][j] / determinant
             else:
