@@ -1,5 +1,13 @@
 import copy
 
+class shell():
+    def __init__(self, top=0, bottom=0):
+        self.top = top
+        self.bottom = bottom
+    
+    def __str__(self):
+        return f"({self.top}/{self.bottom})"
+
 
 def get_matrix_minor(matrix, size, row, column):
     minor = [[0 for x in range(size - 1)] for x in range(size - 1)]
@@ -72,10 +80,11 @@ def get_opposite_matrix(matrix, size):
     opposite_matrix = copy.deepcopy(trans_matrix)
     for i in range(size):
         for j in range(size):
-            if opposite_matrix[i][j] % determinant == 0:
+            nums_after_dot = len(str(opposite_matrix[i][j] / determinant))
+            if nums_after_dot < 5:
                 opposite_matrix[i][j] = trans_matrix[i][j] / determinant
             else:
-                opposite_matrix[i][j] = f"({trans_matrix[i][j]}/{determinant})"
+                opposite_matrix[i][j] = shell(trans_matrix[i][j], determinant)
                 
     print("A* = ", end="")
     for i in range(size):
@@ -101,6 +110,8 @@ def get_opposite_matrix(matrix, size):
         for j in range(size):
             print(f"| {opposite_matrix[i][j]} ", end="")
         print("|")
+        
+    return opposite_matrix
 
 
 def multiply_matrixes(f_matrix, s_matrix, f_size):
@@ -108,9 +119,28 @@ def multiply_matrixes(f_matrix, s_matrix, f_size):
     
     for i in range(f_size):
         result = 0
+        result_shell = shell()
+        result_str = ""
+        isShell = False
         for j in range(f_size):
-            result += f_matrix[i][j] * s_matrix[j]
-        result_list.append(result)
+            if isinstance(f_matrix[i][j], shell):
+                s = f_matrix[i][j]
+                b = s_matrix[j]
+                result_shell.bottom = s.bottom
+                result_shell.top += s.top * b
+                result_str += f"{s} "
+                isShell = True
+            else: 
+                result += f_matrix[i][j] * s_matrix[j]
+                result_str += f"({f_matrix[i][j] * s_matrix[j]}) "
+        
+        if isShell:
+            if isinstance(result, int):
+                result_list.append(result_str.strip().replace(" ", " + ") + f" = {result_shell}")
+            else:
+                result_list.append(result_str.strip().replace(" ", " + ") + f" = {result_shell} + {result}")        
+        else:
+            result_list.append(result)
 
     return result_list
 
@@ -125,52 +155,66 @@ def multiply_matrix_by_num(matrix, num, size):
     return result_matrix
 
 
-def main():
-    matrix_size = 2
-    matrix_size = 3
-    matrix_size = 4
+def solve_matrix_eqution(b_matrix, opp_matrix, size):
+    answer_list = multiply_matrixes(opp_matrix, b_matrix, size)
     
-    a = [
-        [10, 2],
-        [1, 9]
-    ]
-    
-    a = [
-        [4, 8, 9],
-        [11, 10, 2],
-        [0, 1, 9]
-    ]
-    
-    a = [
-        [7, 3, 4, 12],
-        [13, 4, 8, 9],
-        [3, 11, 10, 2],
-        [4, 0, 1, 9]
-    ]
+    for answer in enumerate(answer_list):
+        print(f"x({answer[0] + 1}) = {answer[1]}") 
 
-    b = [7, 14, 9, 1]
+
+def main():
+    # matrix_size = 2
+    # matrix_size = 3
+    # matrix_size = 4
+    
+    # a = [
+    #     [10, 2],
+    #     [1, 9]
+    # ]
+    
+    # a = [
+    #     [4, 8, 9],
+    #     [11, 10, 2],
+    #     [0, 1, 9]
+    # ]
+    
+    # a = [
+    #     [7, 3, 4, 12],
+    #     [13, 4, 8, 9],
+    #     [3, 11, 10, 2],
+    #     [4, 0, 1, 9]
+    # ]
+    
+    matrix_size = int(input("Enter matrix size: "))
+    a = [[0 for x in range(matrix_size)]
+         for x in range(matrix_size)]
+    b = []
+
+    for i in range(0, matrix_size):
+        b.append(int(input(f"Enter b{i + 1}: ")))
+        for j in range(0, matrix_size):
+            a[i][j] = int(input(
+                f"Enter a{i + 1}{j + 1}: "))
+
+    # b = [9, 1]
+    # b = [14, 9, 1]
+    # b = [7, 14, 9, 1]
     
     print("=" * 40)
-    print("Matrix determinant")
+    print("Matrix determinant".upper())
     print("-" * 40)
     get_matrix_determinant(a, matrix_size)
     print("=" * 40 + "\n")
     print("=" * 40)
-    print("Opposite matrix")
+    print("Opposite matrix".upper())
     print("-" * 40)
-    get_opposite_matrix(a, matrix_size)
+    opp = get_opposite_matrix(a, matrix_size)
+    print("=" * 40 + "\n")
     print("=" * 40)
-
-    # matrix_size = int(input("Enter matrix size: "))
-    # a = [[0 for x in range(matrix_size)]
-    #      for x in range(matrix_size)]
-    # b = []
-
-    # for i in range(0, matrix_size):
-    #     b.append(float(input(f"Enter {i + 1} b: ")))
-    #     for j in range(0, matrix_size):
-    #         a[i][j] = float(input(
-    #             f"Enter {j + 1} element in {i + 1} row: "))
+    print("Eqution".upper())
+    print("-" * 40)
+    solve_matrix_eqution(b, opp, matrix_size)
+    print("=" * 40)
 
 
 if __name__ == "__main__":
