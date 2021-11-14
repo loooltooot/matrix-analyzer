@@ -135,7 +135,7 @@ def multiply_matrixes(f_matrix, s_matrix, f_size):
                 result_str_f += f"({s.top * b}/{s.bottom}) "
                 isShell = True
             else: 
-                result += round(f_matrix[i][j] * s_matrix[j] * 100) / 100
+                result += (round(f_matrix[i][j] * s_matrix[j] * 100) / 100)
                 result_str += f"({f_matrix[i][j]}*{s_matrix[j]}) "
                 result_str_f += f"({round(f_matrix[i][j] * s_matrix[j] * 100) / 100}) "
         
