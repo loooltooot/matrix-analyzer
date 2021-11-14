@@ -42,7 +42,7 @@ def get_matrix_determinant(matrix, size):
                 matrix=get_matrix_minor(matrix, size, 0, column), size=size-1)
             
             temp_determinant = (-1)**(1 + column + 1) * matrix[0][column] * minor_determinant
-            determinant += (-1)**(1 + column + 1) * matrix[0][column] * minor_determinant
+            determinant += temp_determinant
             print(f"D({column + 1}/{size}) = {(-1)**(1 + column + 1)} * {matrix[0][column]}({minor_determinant}) = {temp_determinant}")
         print(f"\nD{size} = {determinant}")
             
@@ -93,10 +93,10 @@ def get_opposite_matrix(matrix, size):
         if i > 0:
             print(" " * 5, end="")
         for j in range(size):
-            print(f"| {addons_matrix[i][j]} ", end="")
-            
+            print(f"| {addons_matrix[i][j]} ", end="")  
         print("|")
-    
+    print("")
+
     print("A*T = ", end="")
     for i in range(size):
         if i > 0:
@@ -104,7 +104,8 @@ def get_opposite_matrix(matrix, size):
         for j in range(size):
             print(f"| {trans_matrix[i][j]} ", end="")
         print("|")
-        
+    print("")
+   
     print("A(-1) = ", end="")
     for i in range(size):
         if i > 0:
