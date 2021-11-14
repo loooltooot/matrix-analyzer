@@ -135,9 +135,9 @@ def multiply_matrixes(f_matrix, s_matrix, f_size):
                 result_str_f += f"({s.top * b}/{s.bottom}) "
                 isShell = True
             else: 
-                result += f_matrix[i][j] * s_matrix[j]
+                result += round(f_matrix[i][j] * s_matrix[j] * 100) / 100
                 result_str += f"({f_matrix[i][j]}*{s_matrix[j]}) "
-                result_str_f += f"({f_matrix[i][j] * s_matrix[j]}) "
+                result_str_f += f"({round(f_matrix[i][j] * s_matrix[j] * 100) / 100}) "
         
         if isShell:
             if isinstance(result, int):
@@ -164,7 +164,8 @@ def solve_matrix_eqution(b_matrix, opp_matrix, size):
     answer_list = multiply_matrixes(opp_matrix, b_matrix, size)
     
     for answer in enumerate(answer_list):
-        print(f"x({answer[0] + 1}) = {answer[1]}") 
+        print(f"x({answer[0] + 1}) = {answer[1]}")
+        print("~" * 40) 
 
 
 def main():
