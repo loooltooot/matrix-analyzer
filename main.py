@@ -1,4 +1,6 @@
 import copy
+from math import floor
+
 
 class shell():
     def __init__(self, top=0, bottom=0):
@@ -80,7 +82,7 @@ def get_opposite_matrix(matrix, size):
     opposite_matrix = copy.deepcopy(trans_matrix)
     for i in range(size):
         for j in range(size):
-            nums_after_dot = len(str(opposite_matrix[i][j] / determinant)) - 2
+            nums_after_dot = len(str((opposite_matrix[i][j] / determinant) - floor(opposite_matrix[i][j] / determinant))) - 2
             if nums_after_dot < 5:
                 opposite_matrix[i][j] = trans_matrix[i][j] / determinant
             else:
@@ -121,6 +123,7 @@ def multiply_matrixes(f_matrix, s_matrix, f_size):
         result = 0
         result_shell = shell()
         result_str = ""
+        result_str_f = ""
         isShell = False
         for j in range(f_size):
             if isinstance(f_matrix[i][j], shell):
@@ -128,17 +131,19 @@ def multiply_matrixes(f_matrix, s_matrix, f_size):
                 b = s_matrix[j]
                 result_shell.bottom = s.bottom
                 result_shell.top += s.top * b
-                result_str += f"{s} "
+                result_str += f"({s.top}*{b}/{s.bottom}) "
+                result_str_f += f"({s.top * b}/{s.bottom}) "
                 isShell = True
             else: 
                 result += f_matrix[i][j] * s_matrix[j]
-                result_str += f"({f_matrix[i][j] * s_matrix[j]}) "
+                result_str += f"({f_matrix[i][j]}*{s_matrix[j]}) "
+                result_str_f += f"({f_matrix[i][j] * s_matrix[j]}) "
         
         if isShell:
             if isinstance(result, int):
-                result_list.append(result_str.strip().replace(" ", " + ") + f" = {result_shell}")
+                result_list.append(result_str.strip().replace(" ", " + ") + f" = \n\t" + result_str_f.strip().replace(" ", " + ") + f" = {result_shell}")
             else:
-                result_list.append(result_str.strip().replace(" ", " + ") + f" = {result_shell} + {result}")        
+                result_list.append(result_str.strip().replace(" ", " + ") + f" = \n\t" + result_str_f.strip().replace(" ", " + ") + f" = {result_shell} + {result}")        
         else:
             result_list.append(result)
 
