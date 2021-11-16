@@ -216,23 +216,23 @@ def solve_matrix_eqution(b_matrix, opp_matrix):
 
 
 def kramer(matrix_orig, matrix_b, determinant):
-    size = matrix_orig.size
-    determinants_list = [determinant]
+	size = matrix_orig.size
+	determinants_list = [determinant]
 
-    for i in range(size):
-	temp_matrix = copy.deepcopy(matrix_orig)
-	for j in range(size):
-	    temp_matrix.matrix[j][i] = matrix_b[j]
+	for i in range(size):
+		temp_matrix = copy.deepcopy(matrix_orig)
+		for j in range(size):
+			temp_matrix.matrix[j][i] = matrix_b[j]
 		
-	print(f"∆({i + 1}) = ", end="")
-	temp_matrix.__str__(7)
-	determinants_list.append(get_matrix_determinant(temp_matrix))
-	print("~" * 40)
+		print(f"∆({i + 1}) = ", end="")
+		temp_matrix.__str__(7)
+		determinants_list.append(get_matrix_determinant(temp_matrix))
+		print("~" * 40)
 
-    print("ANSWERS" + "\n" + "~" * 40)
-    for i in range(1, len(determinants_list)):
-        print(f"x({i}) = ({determinants_list[i]} / {determinants_list[0]}) = {determinants_list[i] / determinants_list[0]}")
-        print("~" * 40)
+	print("ANSWERS" + "\n" + "~" * 40)
+	for i in range(1, len(determinants_list)):
+         print(f"x({i}) = ({determinants_list[i]} / {determinants_list[0]}) = {determinants_list[i] / determinants_list[0]}")
+         print("~" * 40)
 	
 
 def main():
