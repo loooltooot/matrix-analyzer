@@ -238,9 +238,9 @@ def kramer(matrix_orig, matrix_b, determinant):
 def main():
     # matrix_size = 2
     # matrix_size = 3
-    matrix_size = 4
+    # matrix_size = 4
     
-    a = matrix_(matrix_size)
+    # a = matrix_(matrix_size)
     
     # a.matrix = [
     #     [10, 2],
@@ -253,26 +253,26 @@ def main():
     #     [0, 1, 9]
     # ]
     
-    a.matrix = [
-        [7, 3, 4, 12],
-        [13, 4, 8, 9],
-        [3, 11, 10, 2],
-        [4, 0, 1, 9]
-    ]
+    # a.matrix = [
+    #     [7, 3, 4, 12],
+    #     [13, 4, 8, 9],
+    #     [3, 11, 10, 2],
+    #     [4, 0, 1, 9]
+    # ]
     
     # b = [9, 1]
     # b = [14, 9, 1]
-    b = [7, 14, 9, 1]
+    # b = [7, 14, 9, 1]
     
-    # matrix_size = int(input("Enter matrix size: "))
-    # a = matrix_(matrix_size)
-    # b = []
+    matrix_size = int(input("Enter matrix size: "))
+    a = matrix_(matrix_size)
+    b = []
 
-    # for i in range(matrix_size):
-    #     b.append(int(input(f"Enter b{i + 1}: ")))
-    #     for j in range(matrix_size):
-    #         a.matrix[i][j] = int(input(
-    #             f"Enter a{i + 1}{j + 1}: "))
+    for i in range(matrix_size):
+        b.append(int(input(f"Enter b{i + 1}: ")))
+        for j in range(matrix_size):
+            a.matrix[i][j] = int(input(
+                f"Enter a{i + 1}{j + 1}: "))
     
     print("=" * 40)
     print("Matrix determinant".upper())
